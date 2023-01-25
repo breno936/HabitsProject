@@ -10,10 +10,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Habit{
+model Product{
   id String @id @default(uuid())
-  title String 
-  created_at DateTime
+  nome String 
+  bar_code String @unique
+  price Decimal
+  created_at DateTime @default(now())
 
-  @@map("habits")
+  @@map("products")
+  ProductCategoria ProductCategoria[]
+}
+
+model Category{
+  id String @id @default(uuid())
+  nome String
+
+  @@map("categorias")
+  ProductCategoria ProductCategoria[]
+}
+
+model ProductCategoria{
+  id String @id @default(uuid())
+  id_product String
+  product Product @relation(fields: [id_product], references: [id])
+  id_categoria String
+  category Category @relation(fields: [id_categoria], references: [id])
+
+  @@map("product_categoria")
 }

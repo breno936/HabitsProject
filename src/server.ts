@@ -1,11 +1,9 @@
-import Fastify from "fastify";
+import express from "express";
+import { router } from "./routes";
 
-const app = Fastify();
+const app = express();
 
-app.get('/', ()=>{
-    return 'Hello World'
-})
+app.use(express.json());
+app.use(router);
 
-app.listen({
-    port:3333,
-})
+app.listen(3333, ()=>console.log("Running"));
